@@ -1,19 +1,20 @@
 const express = require("express");
-const PORT = process.env.PORT || 3001;
-const app = express();
 const cors = require("cors");
 const axios = require("axios");
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+let clashApiUrl = 'https://api.clashroyale.com/v1/cards';
+let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjZlYjkwMmIwLTU3MDItNDY2Mi05N2QzLTMxNjhlNjJlYWIzYSIsImlhdCI6MTY4NzIwNzY5Miwic3ViIjoiZGV2ZWxvcGVyLzZmMTBkZTMwLTBlNjUtODMzNS0wZmQ0LTRmZjZkMWRiZWU0MCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxODEuMzcuMTMyLjEyNiJdLCJ0eXBlIjoiY2xpZW50In1dfQ.TnFkVs-mqdWuDjn6J5S2b9WibTuibNSziyQ6wWYfxcUl0ayu0hf8YdcfqY2fPsazGX9tCyc1fOyXOqYmg-uZBw'
 
 axios
-  .get("https://api.clashroyale.com/v1/cards", {
+  .get(clashApiUrl,{
     headers: {
-      'authorization': `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjA2OTY5MDk5LTYyNWItNDFlMi1hNmRiLTg1MDliNGYzZWNjNyIsImlhdCI6MTY4Njg2MTU4NSwic3ViIjoiZGV2ZWxvcGVyLzZmMTBkZTMwLTBlNjUtODMzNS0wZmQ0LTRmZjZkMWRiZWU0MCIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyI4LjguOC44Il0sInR5cGUiOiJjbGllbnQifV19.rVYWSaTXRUOokHk2zSAxo5FZgY_ov5TUWupKg6UpGbd2iVK7IgdacvWa0EoScekMjzFeycGffzViFufSJ6FB8w`,
-    },
-  })
-  .then((res) => res.json())
+    "Authorization" : `Bearer ${token}`,
+     }})
+  //.then((res) => res.json())
   .then(data => console.log(data))
-  .catch((error) => {
-    console.log(error.message);
+  .catch((error) => {console.log(error.message);
   });
 
 app.use(
@@ -27,7 +28,7 @@ app.get('/', function(req, res){
 });
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+  res.json({ message: data });
 });
 
 app.listen(PORT, () => {
